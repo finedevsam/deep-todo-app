@@ -1,0 +1,890 @@
+{
+	"info": {
+		"_postman_id": "1ea63ab8-0362-4f41-b410-ab1a3738ff34",
+		"name": "My Todo Manager API",
+		"description": "An API to manage your daily tasks efficiently\n\nContact Support:\n Name: Samson Ilemobayo\n Email: ilemobayosamson@gmail.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8634612"
+	},
+	"item": [
+		{
+			"name": "task",
+			"item": [
+				{
+					"name": "{task_id}",
+					"item": [
+						{
+							"name": "Get Task",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/task/:task_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"task",
+										":task_id"
+									],
+									"variable": [
+										{
+											"key": "task_id",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Retrieves a task by its ID.\n\nThis endpoint fetches a task based on the provided ID. If the task is found, \nthe task details are returned in the response. If no task is found with the given ID, \na 404 HTTP exception is raised.\n\n**Path Parameters:**\n- `id` (string): The unique identifier for the task.\n\n**Response:**\nA task with the following attributes:\n- `id` (string): The unique identifier for the task.\n- `title` (string): The title of the task.\n- `description` (string): The description of the task.\n- `completed` (boolean): Whether the task is completed.\n- `created_at` (datetime): The timestamp when the task was created.\n\n**Example Response:**\n```json\n{\n    \"id\": \"12345\",\n    \"title\": \"Complete the project\",\n    \"description\": \"Finish the project by the end of the week\",\n    \"completed\": false,\n    \"created_at\": \"2024-11-12T15:45:00\"\n}\n```\n\n**Status Code:**\n- 200 OK: Task successfully retrieved.\n- 404 Not Found: Task with the provided ID does not exist."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/task/:task_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"task",
+												":task_id"
+											],
+											"variable": [
+												{
+													"key": "task_id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<string>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"completed\": \"<boolean>\",\n  \"created_at\": \"<dateTime>\"\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/task/:task_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"task",
+												":task_id"
+											],
+											"variable": [
+												{
+													"key": "task_id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Update Task",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"completed\": \"<boolean>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/task/:task_id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"task",
+										":task_id"
+									],
+									"variable": [
+										{
+											"key": "task_id",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Updates a task by its ID.\n\nThis endpoint allows for updating the details of an existing task. The `TaskUpdate` \nDTO is used to specify the fields that need to be updated (title, description, completed). \nIf the task is successfully updated, the updated task details are returned in the response.\n\n**Path Parameters:**\n- `id` (string): The unique identifier for the task.\n\n**Request Body:**\n- `title` (string, optional): The new title of the task.\n- `description` (string, optional): The new description of the task.\n- `completed` (boolean, optional): The new completion status of the task.\n\n**Example Request:**\n```json\n{\n    \"title\": \"Updated task title\",\n    \"description\": \"Updated task description\",\n    \"completed\": true\n}\n```\n\n**Response:**\n- `id` (string): The unique identifier for the task.\n- `title` (string): The updated title of the task.\n- `description` (string): The updated description of the task.\n- `completed` (boolean): Whether the task is completed.\n- `created_at` (datetime): The timestamp when the task was created.\n\n**Example Response:**\n```json\n{\n    \"id\": \"12345\",\n    \"title\": \"Updated task title\",\n    \"description\": \"Updated task description\",\n    \"completed\": true,\n    \"created_at\": \"2024-11-12T15:45:00\"\n}\n```\n\n**Status Code:**\n- 200 OK: Task successfully updated.\n- 404 Not Found: Task with the provided ID does not exist."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"completed\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/task/:task_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"task",
+												":task_id"
+											],
+											"variable": [
+												{
+													"key": "task_id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<string>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"completed\": \"<boolean>\",\n  \"created_at\": \"<dateTime>\"\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"completed\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/task/:task_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"task",
+												":task_id"
+											],
+											"variable": [
+												{
+													"key": "task_id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "{sid}",
+					"item": [
+						{
+							"name": "Delete Task",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/task/:sid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"task",
+										":sid"
+									],
+									"variable": [
+										{
+											"key": "sid",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Deletes a task by its ID.\n\nThis endpoint deletes the task with the provided ID. If the task is found, it is \nremoved from the database. A 204 No Content response is returned to indicate \nsuccessful deletion.\n\n**Path Parameters:**\n- `id` (string): The unique identifier for the task to delete.\n\n**Response:**\n- 204 No Content: Task was successfully deleted. The response body is empty.\n\n**Status Code:**\n- 204 No Content: Task successfully deleted.\n- 404 Not Found: Task with the provided ID does not exist."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/task/:sid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"task",
+												":sid"
+											],
+											"variable": [
+												{
+													"key": "sid",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/task/:sid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"task",
+												":sid"
+											],
+											"variable": [
+												{
+													"key": "sid",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Patch Task",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"completed\": \"<boolean>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/task/:sid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"task",
+										":sid"
+									],
+									"variable": [
+										{
+											"key": "sid",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								},
+								"description": "Patches (partially updates) a task by its ID.\n\nThis endpoint allows partial updates to a task's fields. Only the fields provided \nin the `TaskPatch` DTO are updated. If the task is successfully patched, \nthe updated task details are returned in the response.\n\n**Path Parameters:**\n- `id` (string): The unique identifier for the task.\n\n**Request Body:**\n- `title` (string, optional): The new title of the task.\n- `description` (string, optional): The new description of the task.\n- `completed` (boolean, optional): The new completion status of the task.\n\n**Example Request:**\n```json\n{\n    \"title\": \"Partially updated title\",\n    \"completed\": true\n}\n```\n\n**Response:**\n- `id` (string): The unique identifier for the task.\n- `title` (string): The updated title of the task.\n- `description` (string): The updated description of the task.\n- `completed` (boolean): Whether the task is completed.\n- `created_at` (datetime): The timestamp when the task was created.\n\n**Example Response:**\n```json\n{\n    \"id\": \"12345\",\n    \"title\": \"Partially updated title\",\n    \"description\": \"Original description\",\n    \"completed\": true,\n    \"created_at\": \"2024-11-12T15:45:00\"\n}\n```\n\n**Status Code:**\n- 200 OK: Task successfully patched.\n- 404 Not Found: Task with the provided ID does not exist."
+							},
+							"response": [
+								{
+									"name": "Successful Response",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"completed\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/task/:sid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"task",
+												":sid"
+											],
+											"variable": [
+												{
+													"key": "sid",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<string>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"completed\": \"<boolean>\",\n  \"created_at\": \"<dateTime>\"\n}"
+								},
+								{
+									"name": "Validation Error",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"completed\": \"<boolean>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/task/:sid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"task",
+												":sid"
+											],
+											"variable": [
+												{
+													"key": "sid",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+									"code": 422,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Create Task",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/task",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"task"
+							]
+						},
+						"description": "Creates a new task in the database.\n\nThis endpoint receives a `CreateTask` data transfer object (DTO) that contains \nthe task details (title, description), creates a new task using the provided \ndata, and stores it in the database. The newly created task is returned in \nthe response.\n\n**Request Body:**\n- `title` (string): The title of the task. (Required)\n- `description` (string): A detailed description of the task. (Required)\n\n**Example Request:**\n```json\n{\n    \"title\": \"Complete the project\",\n    \"description\": \"Finish the project by the end of the week\"\n}\n```\n\n**Response:**\n- `id` (string): The unique identifier for the task.\n- `title` (string): The title of the created task.\n- `description` (string): The description of the created task.\n- `completed` (boolean): Whether the task is completed. Defaults to `false`.\n- `created_at` (datetime): The timestamp when the task was created.\n\n**Example Response:**\n```json\n{\n    \"id\": \"12345\",\n    \"title\": \"Complete the project\",\n    \"description\": \"Finish the project by the end of the week\",\n    \"completed\": false,\n    \"created_at\": \"2024-11-12T15:45:00\"\n}\n```\n\n**Status Code:**\n- 201 Created: Task successfully created."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/task",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"task"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						},
+						{
+							"name": "Validation Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/task",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"task"
+									]
+								}
+							},
+							"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Get All Tasks",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/tasks",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks"
+					]
+				},
+				"description": "Retrieves a list of all tasks from the database.\n\nThis endpoint returns all tasks stored in the database. The tasks are \nreturned in the form of a list of `TaskResponse` DTOs.\n\n**Response:**\nA list of tasks, each with the following attributes:\n- `id` (string): The unique identifier for the task.\n- `title` (string): The title of the task.\n- `description` (string): The description of the task.\n- `completed` (boolean): Whether the task is completed.\n- `created_at` (datetime): The timestamp when the task was created.\n\n**Example Response:**\n```json\n[\n    {\n        \"id\": \"12345\",\n        \"title\": \"Complete the project\",\n        \"description\": \"Finish the project by the end of the week\",\n        \"completed\": false,\n        \"created_at\": \"2024-11-12T15:45:00\"\n    },\n    {\n        \"id\": \"12346\",\n        \"title\": \"Write documentation\",\n        \"description\": \"Document the project for future reference\",\n        \"completed\": false,\n        \"created_at\": \"2024-11-13T09:00:00\"\n    }\n]\n```\n\n**Status Code:**\n- 200 OK: List of tasks retrieved successfully."
+			},
+			"response": [
+				{
+					"name": "Successful Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tasks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n  {\n    \"id\": \"<string>\",\n    \"title\": \"<string>\",\n    \"description\": \"<string>\",\n    \"completed\": \"<boolean>\",\n    \"created_at\": \"<dateTime>\"\n  },\n  {\n    \"id\": \"<string>\",\n    \"title\": \"<string>\",\n    \"description\": \"<string>\",\n    \"completed\": \"<boolean>\",\n    \"created_at\": \"<dateTime>\"\n  }\n]"
+				}
+			]
+		},
+		{
+			"name": "Filter Tasks",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/filter/tasks?completed=<boolean>&title=<string>",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"filter",
+						"tasks"
+					],
+					"query": [
+						{
+							"key": "completed",
+							"value": "<boolean>"
+						},
+						{
+							"key": "title",
+							"value": "<string>"
+						}
+					]
+				},
+				"description": "Filter tasks based on optional query parameters: `completed` status and `title`.\n\nThis endpoint allows users to retrieve tasks that match the provided filter criteria.\nYou can filter by `completed` (boolean) and `title` (string). If no filters are provided, \nall tasks will be returned.\n\nQuery Parameters:\n    completed (Optional[bool]): Filter tasks based on their completed status (True/False).\n    title (Optional[str]): Filter tasks based on their title.\n\nReturns:\n    List[TaskResponse]: A list of tasks matching the filter criteria."
+			},
+			"response": [
+				{
+					"name": "Successful Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/filter/tasks?completed=<boolean>&title=<string>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"filter",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "completed",
+									"value": "<boolean>"
+								},
+								{
+									"key": "title",
+									"value": "<string>"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n  {\n    \"id\": \"<string>\",\n    \"title\": \"<string>\",\n    \"description\": \"<string>\",\n    \"completed\": \"<boolean>\",\n    \"created_at\": \"<dateTime>\"\n  },\n  {\n    \"id\": \"<string>\",\n    \"title\": \"<string>\",\n    \"description\": \"<string>\",\n    \"completed\": \"<boolean>\",\n    \"created_at\": \"<dateTime>\"\n  }\n]"
+				},
+				{
+					"name": "Validation Error",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/filter/tasks?completed=<boolean>&title=<string>",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"filter",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "completed",
+									"value": "<boolean>"
+								},
+								{
+									"key": "title",
+									"value": "<string>"
+								}
+							]
+						}
+					},
+					"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+					"code": 422,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"loc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"msg\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Welcome",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "A simple welcome endpoint for the todo manager API.\n\nReturns:\n    dict: A dictionary containing a welcome message."
+			},
+			"response": [
+				{
+					"name": "Successful Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/",
+			"type": "string"
+		}
+	]
+}
