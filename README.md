@@ -112,7 +112,7 @@ poetry run pytest --maxfail=1 --disable-warnings -q
 
 - **`main.py`**: Contains the FastAPI application setup and route definitions.
 - **`config/db_config.py`**: Handles database configuration, including database engine setup and session management.
-- **`todo/model/`**: Contains SQLAlchemy/SQLModel models for database tables.
+- **`todo/model/`**: Contains SQLModel models for database tables.
 - **`todo/dtos/`**: Contains Pydantic models for data validation (e.g., `CreateTask`, `TaskPatch`).
 - **`todo/handlers/`**: Contains logic for handling CRUD operations and business logic.
 - **`tests/`**: Contains unit tests for API endpoints and application logic.
