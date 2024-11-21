@@ -34,8 +34,8 @@ poetry --version
 Clone the project repository to your local machine:
 
 ```bash
-git clone https://github.com/finedevsam/todo-manager-api.git
-cd todo-manager-api
+git clone https://github.com/finedevsam/deep-todo-app.git
+cd deep-todo-app
 ```
 
 ### 2. Install Project Dependencies
